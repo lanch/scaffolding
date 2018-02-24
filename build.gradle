@@ -5,6 +5,7 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.6"
     }
 }
 
@@ -22,6 +23,7 @@ apply plugin: 'idea'
 apply plugin: "org.grails.grails-plugin"
 apply plugin: "org.grails.grails-gsp"
 apply plugin: "org.grails.grails-plugin-publish"
+apply plugin: "asset-pipeline"
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -40,11 +42,15 @@ dependencies {
 
 
   compile "org.grails.plugins:fields:2.0.3"
+  runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.14.6"
   testCompile "org.grails:grails-plugin-testing"
 
   console "org.grails:grails-console"
 }
 
+assets {
+    packagePlugin = true
+}
 
 grailsPublish {
     userOrg = "grails"

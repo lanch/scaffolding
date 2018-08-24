@@ -7,11 +7,14 @@ import org.grails.encoder.CodecLookup
 import org.grails.encoder.Encoder
 import org.grails.taglib.TagOutput
 import org.grails.taglib.encoder.OutputContextLookupHelper
+import org.grails.web.gsp.io.GrailsConventionGroovyPageLocator
 import org.springframework.web.servlet.support.RequestContextUtils
 
 class MetronicTagLib implements TagLibrary {
 
     CodecLookup codecLookup
+
+    GrailsConventionGroovyPageLocator groovyPageLocator
 
     static namespace = "metronic"
 
@@ -289,4 +292,15 @@ class MetronicTagLib implements TagLibrary {
     private callLink(Map attrs, Object body) {
         "<li>${TagOutput.captureTagOutput(tagLibraryLookup, 'g', 'link', attrs, body, OutputContextLookupHelper.lookupOutputContext())}</li>"
     }
+
+    def ifExists = { Map attrs ->
+        def template = attrs.remove("template")
+        def bean = attrs.remove("bean")
+        if (groovyPageLocator.findTemplateByPath(template)) {
+            out << render(template: template, model: [bean: bean])
+        } else {
+            out << render(template: '/templates/_fields/actions', model: [bean: bean])
+        }
+    }
+
 }

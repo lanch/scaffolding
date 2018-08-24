@@ -6,6 +6,7 @@
                 <g:set var="propTitle">${domainClass.decapitalizedName}.${p.name}.label</g:set>
                 <metronic:sortableColumn property="${p.name}" title="${message(code: propTitle, default: p.defaultLabel)}" />
             </g:each>
+            <td>操作</td>
         </tr>
     </thead>
     <tbody>

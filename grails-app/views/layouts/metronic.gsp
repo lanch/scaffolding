@@ -67,16 +67,23 @@
                             <span class="arrow open"></span>
                         </a>
                         <ul class="sub-menu">
-                            <li class="nav-item start active open">
+                            <g:set var="homeSeletectedClass" value="" /> 
+                            <g:if test="${request.forwardURI == '/'}">
+                                <g:set var="homeSeletectedClass" value="active open" /> 
+                            </g:if>
+                            <li class="nav-item start ${homeSeletectedClass}">
                                 <g:link class="nav-link" uri="/">
                                     <i class="icon-bar-chart"></i>
                                     <span class="title">Home</span>
                                     <span class="selected"></span>
                                 </g:link>
-                                
                             </li>
                             <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-                                <li class="nav-item">
+                                <g:set var="ctlClassSelect" value="" />
+                                <g:if test="${request.forwardURI.startsWith('/' + c.logicalPropertyName)}">
+                                    <g:set var="ctlClassSelect" value="active open" />
+                                </g:if>
+                                <li class="nav-item ${ctlClassSelect}">
                                     <g:link class="nav-link" controller="${c.logicalPropertyName}">
                                         <i class="icon-bulb"></i>
                                         <span class="title">${c.logicalPropertyName}</span>
